@@ -45,6 +45,7 @@ import org.springframework.http.converter.feed.AtomFeedHttpMessageConverter;
 import org.springframework.http.converter.feed.RssChannelHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.YassonHttpMessageConverter;
 import org.springframework.http.converter.smile.MappingJackson2SmileHttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
@@ -143,6 +144,8 @@ public class RestTemplate extends InterceptingHttpAccessor implements RestOperat
 	private static final boolean gsonPresent =
 			ClassUtils.isPresent("com.google.gson.Gson", RestTemplate.class.getClassLoader());
 
+	private static final boolean yassonPresent = ClassUtils.isPresent("", RestTemplate.class.getClassLoader());
+
 
 	private final List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 
@@ -181,6 +184,8 @@ public class RestTemplate extends InterceptingHttpAccessor implements RestOperat
 		}
 		else if (gsonPresent) {
 			this.messageConverters.add(new GsonHttpMessageConverter());
+		} else if (yassonPresent) {
+			this.messageConverters.add(new YassonHttpMessageConverter());
 		}
 
 		if (jackson2SmilePresent) {

@@ -99,6 +99,7 @@ configure(allprojects) { project ->
 	ext.xmlunitVersion         = "2.3.0"
 	ext.xnioVersion            = "3.4.3.Final"
 	ext.xstreamVersion         = "1.4.9"
+	ext.yassonVersion          = "1.0-SNAPSHOT"
 
 	ext.gradleScriptDir = "${rootProject.projectDir}/gradle"
 
@@ -179,6 +180,7 @@ configure(allprojects) { project ->
 		maven { url "https://repo.spring.io/libs-release" }
 		maven { url "https://repo.spring.io/milestone" }
 		maven { url "http://dl.bintray.com/kotlin/kotlin-eap-1.1" }
+		maven { url "https://repo.eclipse.org/content/repositories/yasson-snapshots" }
 	}
 
 	dependencies {
@@ -786,6 +788,7 @@ project("spring-web") {
 		optional("javax.xml.ws:jaxws-api:${jaxwsVersion}")
 		optional("javax.mail:javax.mail-api:${javamailVersion}")
 		optional("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+		optional("org.eclipse:yasson:${yassonVersion}")
 		testCompile(project(":spring-context-support"))  // for JafMediaTypeFactory
 		testCompile("io.projectreactor.addons:reactor-test")
 		testCompile("org.apache.taglibs:taglibs-standard-jstlel:1.2.1") {

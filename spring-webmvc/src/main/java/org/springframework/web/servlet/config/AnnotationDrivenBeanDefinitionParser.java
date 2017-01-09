@@ -51,6 +51,7 @@ import org.springframework.http.converter.feed.RssChannelHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.YassonHttpMessageConverter;
 import org.springframework.http.converter.smile.MappingJackson2SmileHttpMessageConverter;
 import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
@@ -183,6 +184,8 @@ class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 
 	private static final boolean gsonPresent =
 			ClassUtils.isPresent("com.google.gson.Gson", AnnotationDrivenBeanDefinitionParser.class.getClassLoader());
+
+	private static final boolean yassonPresent = ClassUtils.isPresent("", AnnotationDrivenBeanDefinitionParser.class.getClassLoader());
 
 
 	@Override
@@ -438,7 +441,7 @@ class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 		if (jaxb2Present || jackson2XmlPresent) {
 			props.put("xml", MediaType.APPLICATION_XML_VALUE);
 		}
-		if (jackson2Present || gsonPresent) {
+		if (jackson2Present || gsonPresent || yassonPresent) {
 			props.put("json", MediaType.APPLICATION_JSON_VALUE);
 		}
 		if (jackson2SmilePresent) {
@@ -588,6 +591,8 @@ class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 			}
 			else if (gsonPresent) {
 				messageConverters.add(createConverterDefinition(GsonHttpMessageConverter.class, source));
+			} else if (yassonPresent) {
+				messageConverters.add(createConverterDefinition(YassonHttpMessageConverter.class, source));
 			}
 
 			if (jackson2SmilePresent) {

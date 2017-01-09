@@ -19,6 +19,7 @@ package org.springframework.http.converter.support;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.YassonHttpMessageConverter;
 import org.springframework.http.converter.smile.MappingJackson2SmileHttpMessageConverter;
 import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter;
 import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
@@ -51,6 +52,8 @@ public class AllEncompassingFormHttpMessageConverter extends FormHttpMessageConv
 	private static final boolean gsonPresent =
 			ClassUtils.isPresent("com.google.gson.Gson", AllEncompassingFormHttpMessageConverter.class.getClassLoader());
 
+	private static final boolean yassonPresent = ClassUtils.isPresent("", AllEncompassingFormHttpMessageConverter.class.getClassLoader());
+
 
 	public AllEncompassingFormHttpMessageConverter() {
 		addPartConverter(new SourceHttpMessageConverter<>());
@@ -64,6 +67,8 @@ public class AllEncompassingFormHttpMessageConverter extends FormHttpMessageConv
 		}
 		else if (gsonPresent) {
 			addPartConverter(new GsonHttpMessageConverter());
+		} else if (yassonPresent) {
+			addPartConverter(new YassonHttpMessageConverter());
 		}
 
 		if (jackson2XmlPresent) {
